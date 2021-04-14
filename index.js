@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 const app=require('./app');
 const port=3900;
-mongoose.connect('mongodb+srv://avanzada:XNpZpBdcUVnJ2p8C@cluster0.ngp95.mongodb.net/db', 
+mongoose.connect('mongodb+srv://elcasique:TBK5Qa9BFpNKOyrA@cluster0.mwffh.mongodb.net/', 
 {useNewUrlParser: true, 
 useUnifiedTopology: true}).then(()=>{
     console.log("Conecto");

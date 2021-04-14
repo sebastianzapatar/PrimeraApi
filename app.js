@@ -1,7 +1,7 @@
 'use strict';
 //cargar los modulos de js
 const express=require('express');
-
+const cors = require('cors');
 //vamos a ejecutar el servidor
 const app=express();
 //Cargas los archivos y asignarles una ruta
@@ -10,6 +10,7 @@ const EstudianteUrl=require('./urls/EstudianteUrl');
 app.use(express.json());
 app.use(express.urlencoded());
 //Cors permite que otras aplicaciones se conecten
+app.use(cors());
 //Añadir los prefijos
 app.use('/',EstudianteUrl);
 //Exportar los modulos
