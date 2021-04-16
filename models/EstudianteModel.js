@@ -4,8 +4,8 @@ const Estudianteschema=mongoose.Schema({
     apellidos:String,
     email:{
         type:String,
-        
     },
-    date:{type:Date, default:Date.now}
+    date:{type:Date, default:Date.now},
+    image:String
 });
 module.exports=mongoose.model('Estudiante',Estudianteschema);

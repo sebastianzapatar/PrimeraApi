@@ -1,10 +1,84 @@
 const Estudiante=require('../models/EstudianteModel');
+const fs=require('fs');
+const path=require('path');
 const controller={
     datosestudiante:(req,res)=>{
         console.log("Soy el controlador tio");
         return res.status(200).send({
             nombre:'Steven',
             apellido:'Dominguez'
+        })
+    },
+    getImage:(req,res)=>{
+        const file=req.params.image;
+        const path_file='./upload/images/'+file;
+        fs.stat(path_file,(error,exit)=>{
+            if(error){
+                return res.status(404).send({
+                    status:'error',
+                    message:'Imagen no encontrada'
+                })
+            }
+            return res.sendFile(path.resolve(path_file));
+        })
+    },
+    upload:(req,res)=>{
+        let file_name='Imagen no subida';
+        if(!req.files){
+            return res.status(400).send({
+                status:'error',
+                message:file_name
+            })
+        }
+        const file_path=req.files.file0.path;
+        const file_split=file_path.split('\\');
+        file_name=file_split[2];
+        const file_extension=file_name.split('.')[1];
+        console.log(file_extension);
+        if(file_extension!='png' && file_extension!='jpg'
+        && file_extension!='jpeg' && file_extension!='gif'){
+            
+            return res.status(400).send({
+                status:'error',
+                message:'not valid extension'
+            })
+        
+        }
+        else{
+            const id=req.params.id;
+            Estudiante.findOneAndUpdate({_id:id},{image:file_name},
+                {new:true},(err,estudianteact)=>{
+                    if(err){
+                        return res.status(500).send({
+                            status:'Error',
+                            message:'Error al guardar la imagen'
+                        })
+                    }
+                    return res.status(200).send({
+                        status:'exito',
+                        estudianteact
+                    })
+                })
+        }
+        
+    },
+    search:(req,res)=>{
+        const buscar=req.params.dato;
+        Estudiante.find({"$or":[
+            {"nombre":new RegExp(buscar,'i')},
+            {"apellidos":new RegExp(buscar,'i')},
+            {"email":new RegExp(buscar,'i')}
+        ]}).exec((err,estudiantes)=>{
+            if(err){
+                return res.status(500).send({
+                    status:'error',
+                    message:'Contacte al admin'
+                })
+            }
+            return res.status(200).send({
+                status:'exito',
+                estudiantes
+            })
         })
     },
     save:(req,res)=>{

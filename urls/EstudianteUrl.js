@@ -1,4 +1,5 @@
-
+const multipart=require('connect-multiparty');
+const md_upload=multipart({uploadDir:'./upload/images'});
 const expres=require('express');
 const EstudianteController=require('../controllers/EstudianteController');
 const router=expres.Router();
@@ -8,4 +9,7 @@ router.get('/list',EstudianteController.get_estudiantes);
 router.get('/buscar/:id',EstudianteController.get_estudiante);
 router.delete('/delete/:id',EstudianteController.delete_estudiante);
 router.put('/edit/:id',EstudianteController.update_estudiante);
+router.get('/search/:dato',EstudianteController.search);
+router.get('/getimage/:image',EstudianteController.getImage);
+router.post('/upload-image/:id',md_upload,EstudianteController.upload);
 module.exports=router;
