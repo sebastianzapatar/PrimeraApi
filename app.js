@@ -12,7 +12,7 @@ app.use(express.urlencoded());
 //Cors permite que otras aplicaciones se conecten
 app.use(cors());
 //Añadir los prefijos
-app.use('/',EstudianteUrl);
+app.use('/api',EstudianteUrl);
 //Exportar los modulos
 module.exports=app;
 
