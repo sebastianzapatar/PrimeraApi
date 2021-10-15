@@ -1,6 +1,7 @@
 const Estudiante=require('../models/EstudianteModel');
 const fs=require('fs');
 const path=require('path');
+const { ok } = require('assert');
 const controller={
     save:(req,res)=>{
         /*
@@ -47,7 +48,49 @@ const controller={
        }
        
     },
-    
+    getEstudiantes:(req,res)=>{
+        Estudiante.find({}).sort('apellidos').exec((err,estudiantes)=>{
+            if(err){
+                return res.status(400).send({
+                    status:'error',
+                    message:'No se encontaron datos'
+                })
+            }
+            return res.status(400).send({
+                status:'ok',
+                estudiantes
+            })
+        })
+    },
+    getEstudiante:(req,res)=>{
+        //Recoger el id de la url
+        const {id}=req.params;
+        console.log(id);
+        if(!id || id==null){
+            return res.status(500).send({
+                status:'malo',
+                message:'Error al devolver los datos'
+            })
+        }
+        Estudiante.findById(id,(err,estudiante)=>{
+            if(err){
+                return res.status(400).send({
+                    status:'malo',
+                    message:'No se pudo procesar'
+                })
+            }
+            if(!estudiante){
+                return res.status(201).send({
+                    status:'ok',
+                    message:'Ingrese id correcto'
+                })
+            }
+            return res.status(200).send({
+                status:'ok',
+                estudiante
+            })
+        })
+    }
     
 }
 module.exports=controller;
