@@ -90,6 +90,30 @@ const controller={
                 estudiante
             })
         })
+    },
+    //Borrar
+    deleteEstudiante:(req,res)=>{
+        //Coger el id que nos llega desde la url
+        const {id}=req.params;
+        console.log(id);
+        if(!id || id==null){
+            return res.status(500).send({
+                status:'fail',
+                message:'Error no se paso el parametro id'
+            })
+        }
+        Estudiante.deleteOne({_id:id},(err,estudiante)=>{
+            if(err || estudiante){
+                return res.status(500).send({
+                    status:'error',
+                    message:'No existe el id'
+                })
+            }
+            return res.status(202).send({
+                status:'ok',
+                estudiante
+            })
+        })
     }
     
 }

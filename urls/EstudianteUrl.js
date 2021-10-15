@@ -6,4 +6,5 @@ const router=expres.Router();
 router.post('/save',EstudianteController.save);
 router.get('/list',EstudianteController.getEstudiantes);
 router.get('/estudiante/:id',EstudianteController.getEstudiante);
+router.delete('/borrar/:id',EstudianteController.deleteEstudiante)
 module.exports=router;
