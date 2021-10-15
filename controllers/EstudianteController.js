@@ -114,6 +114,24 @@ const controller={
                 estudiante
             })
         })
+    },
+    search:(req,res)=>{
+        const {texto}=req.params;
+        Estudiante.find({"$or":[
+            {"nombre":new RegExp(texto,'i')},
+            {"apellidos":new RegExp(texto,'i')}
+        ]}).exec((err,estudiantes)=>{
+            if(err){
+                return res.status(500).send({
+                    status:'error',
+                    message:'Contacte al admon'
+                })
+            }
+            return res.status(200).send({
+                status:'exito',
+                estudiantes
+            })
+        })
     }
     
 }
