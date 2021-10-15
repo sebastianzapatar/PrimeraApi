@@ -7,5 +7,6 @@ router.post('/save',EstudianteController.save);
 router.get('/list',EstudianteController.getEstudiantes);
 router.get('/estudiante/:id',EstudianteController.getEstudiante);
 router.get('/buscar/:texto',EstudianteController.search);
-router.delete('/borrar/:id',EstudianteController.deleteEstudiante)
+router.delete('/borrar/:id',EstudianteController.deleteEstudiante);
+router.put('/editar/:id',EstudianteController.updateEstudiante);
 module.exports=router;

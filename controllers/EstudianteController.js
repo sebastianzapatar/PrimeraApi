@@ -132,6 +132,35 @@ const controller={
                 estudiantes
             })
         })
+    },
+    updateEstudiante:(req,res)=>{
+        /*
+        1. Recoger los datos
+        2. Validamos
+        3. Buscar y actualizar
+        */
+       const {nombre,apellidos}=req.body;
+       const {id}=req.params;
+       try{
+            if(nombre.length>0 || apellidos.length>0){
+                Estudiante.updateOne({_id:id},req.body,{new:true},
+                    (err,estudiante)=>{
+                        if(err){
+                            return res.status(401).send({
+                                status:'fail',
+                                message:'Contacte al admin'
+                            })
+                        }
+                        return res.status(200).send({
+                            status:'exito',
+                            estudiante
+                        })
+                    })
+            }
+       }
+       catch(error){
+           console.log('Contacte el administrador')
+       }
     }
     
 }
