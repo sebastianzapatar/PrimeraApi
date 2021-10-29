@@ -161,6 +161,58 @@ const controller={
        catch(error){
            console.log('Contacte el administrador')
        }
+    },
+    upload:(req,res)=>{
+        let file_name='imagen no subida';
+        if(!req.files){
+            return res.status(404).send({
+                status:'error',
+                message:file_name
+            })
+        }
+        let file_path=req.files.file0.path;
+        console.log(file_path);
+        const file_split=file_path.split('/');// "\\" en windows
+        file_name=file_split[2];
+        const file_extension=file_name.split('.')[1];
+        if (file_extension != 'png' && file_extension !='jpg'
+        && file_extension !='jpeg' && file_extension !='gif'){
+            fs.unlink(file_path,(err)=>{
+                return res.status(200).send({
+                    status:'error',
+                    message:'Exetension validad'
+                })
+            })
+        }
+        else{
+            const id=req.params.id;
+            Estudiante.findOneAndUpdate({_id:id},{image:file_name},
+                {new:true},(err,estudianteUpdate)=>{
+                    if(err || !estudianteUpdate){
+                        return res.status(400).send({
+                            status:'error',
+                            message:'error'
+                        })
+                    }
+                    return res.status(200).send({
+                        status:'ok',
+                        estudianteUpdate
+                    })
+                })
+        }
+    },
+    getImage:(req,res)=>{
+        const file=req.params.nombreImagen;
+        const path_file='./upload/images/'+file;
+        fs.stat(path_file,(error,exist)=>{
+            if(error){
+                return res.status(404).send({
+                    status:'error',
+                    message:'no se encuentra la imagen'
+                })
+            }
+            return res.sendFile(path.resolve(path_file));
+        })
     }
     
 }

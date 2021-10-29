@@ -9,4 +9,6 @@ router.get('/estudiante/:id',EstudianteController.getEstudiante);
 router.get('/buscar/:texto',EstudianteController.search);
 router.delete('/borrar/:id',EstudianteController.deleteEstudiante);
 router.put('/editar/:id',EstudianteController.updateEstudiante);
+router.post('/subir-imagen/:id',md_upload,EstudianteController.upload);
+router.get('/imagen/:nombreImagen',EstudianteController.getImage)
 module.exports=router;
