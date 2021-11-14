@@ -1,6 +1,6 @@
 
 const mongoose = require('mongoose');
-const app=require('./app');
+const app=require('./app')
 const port=8080;
 mongoose.connect('mongodb+srv://elcasique:TGXWeVbd1e97mO1q@cluster0.mwffh.mongodb.net/test', 
 {useNewUrlParser: true, 
